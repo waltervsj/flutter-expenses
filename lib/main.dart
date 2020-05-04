@@ -30,7 +30,6 @@ class ExpensesApp extends StatelessWidget {
         canvasColor: Colors.transparent,
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
-                // fontFamily: 'OpenSans',
                 fontSize: 18,
               ),
             ),

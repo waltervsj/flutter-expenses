@@ -38,13 +38,12 @@ class GraficBar extends StatelessWidget {
               ],
               borderRadius: BorderRadius.circular(15),
             ),
-            width: 25,
+            width: MediaQuery.of(context).size.width / 25,
             alignment: Alignment.bottomCenter,
             child: Stack(alignment: Alignment.bottomCenter, children: [
               FractionallySizedBox(
                 heightFactor: transactionMap['percentage'],
                 child: Container(
-                  
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),

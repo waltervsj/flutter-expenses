@@ -17,6 +17,7 @@ class TransactionList extends StatelessWidget {
               return;
             },
             child: ListView.builder(
+              padding: EdgeInsets.only(right: 5, left: 5),
               itemCount: transactions.length,
               itemBuilder: (context, index) {
                 var transaction = transactions[index];
