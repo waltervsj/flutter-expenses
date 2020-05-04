@@ -1,30 +1,27 @@
+import 'dart:math';
+
 import '../model/transaction.dart';
 
 class Transactions {
-  static List<Transaction> transactionsData = [
-      Transaction(
-        id: 1,
-        title: 'Tênis de corrida',
-        value: 1310.76,
-        date: DateTime.now(),
+  static List<Transaction> transactionsData = List<Transaction>.generate(
+    Random().nextInt(100),
+    (index) => new Transaction(
+      id: index + 1,
+      title: 'Transaction $index',
+      value: Random().nextDouble() * Random().nextInt(1000),
+      date: DateTime.now().subtract(
+        Duration(
+          days: Random().nextInt(7),
+        ),
       ),
-      Transaction(
-        id: 2,
-        title: 'Conta de luz',
-        value: 211.30,
-        date: DateTime.now(),
-      ),
-      Transaction(
-        id: 3,
-        title: 'Conta de água',
-        value: 99,
-        date: DateTime.now(),
-      ),
-      Transaction(
-        id: 4,
-        title: 'ComboNET',
-        value: 567.86,
-        date: DateTime.now(),
-      ),
-    ];
+    ),
+  ).toList();
+
+  static List<Transaction> get recentTransactions {
+    return transactionsData.where((transaction) {
+      return transaction.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
 }
