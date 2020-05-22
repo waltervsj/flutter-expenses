@@ -72,6 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
     if (doPop) Navigator.of(context).pop();
   }
 
+  _deleteTransaction(int id) {
+    setState(() {
+      Transactions.transactionsData.removeWhere((tr) => tr.id == id);
+    });
+  }
   _openTransactionFormModal(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -110,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 6,
             child: TransactionList(
               transactions: Transactions.transactionsData,
+              onRemove: _deleteTransaction,
             ),
           ),
         ],

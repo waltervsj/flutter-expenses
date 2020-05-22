@@ -5,8 +5,9 @@ import '../model/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(int) onRemove;
 
-  TransactionList({@required this.transactions});
+  TransactionList({@required this.transactions, @required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,10 @@ class TransactionList extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.deepPurple[300],
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.deepPurple, width: 2)
+                        border: Border.all(
+                          color: Colors.deepPurple,
+                          width: 2,
+                        ),
                       ),
                       child: CircleAvatar(
                         backgroundColor: Colors.black,
@@ -40,7 +44,9 @@ class TransactionList extends StatelessWidget {
                             padding: EdgeInsets.only(right: 8, left: 8),
                             child: Text(
                               '\$ ${transaction.value.toStringAsFixed(2)}',
-                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ),
                         ),
@@ -52,6 +58,11 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(DateFormat('dd MMMM y', 'pt-BR')
                         .format(transaction.date)),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Colors.red[300],
+                      onPressed: () => this.onRemove(transaction.id),
+                    ),
                   ),
                 );
               },

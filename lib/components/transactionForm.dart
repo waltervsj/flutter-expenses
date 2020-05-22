@@ -17,7 +17,7 @@ class _TransactionFormState extends State<TransactionForm> {
 
   Future<void> _submitForm() async {
     final title = this._titleController.text;
-    final value = double.tryParse(this._valueController.text) ?? 0;
+    final value = double.tryParse(this._valueController.text) ?? 0.0;
     final date = _selectedDate;
 
     if (title.isEmpty || value <= 0 || date == null) {

@@ -36,7 +36,7 @@ class Grafic extends StatelessWidget {
       return {
         'day': DateFormat.E().format(weekDay),
         'value': totalDaySum.toStringAsFixed(2),
-        'percentage': totalDaySum / _weekSum,
+        'percentage': _weekSum != 0 ? totalDaySum / _weekSum : 0.0,
       };
     }).reversed.toList();
   }
