@@ -52,6 +52,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _showChart = false;
   Future<void> _addTransaction(
     String titulo,
     double valor,
@@ -77,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Transactions.transactionsData.removeWhere((tr) => tr.id == id);
     });
   }
+
   _openTransactionFormModal(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -88,6 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -96,6 +100,15 @@ class _MyHomePageState extends State<MyHomePage> {
           'Personal expenses',
         ),
         actions: <Widget>[
+          if (isLandscape)
+            IconButton(
+              icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+              onPressed: () => {
+                setState(() {
+                  _showChart = !_showChart;
+                })
+              },
+            ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () => {
@@ -105,20 +118,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       drawer: AppHeader(),
-      body: Column(
-        children: [
-          Flexible(
-            flex: 3,
-            child: Grafic(Transactions.recentTransactions),
-          ),
-          Flexible(
-            flex: 6,
-            child: TransactionList(
-              transactions: Transactions.transactionsData,
-              onRemove: _deleteTransaction,
-            ),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            if (_showChart || !isLandscape)
+              Flexible(
+                flex: 4,
+                child: Grafic(Transactions.recentTransactions),
+              ),
+            if (!_showChart || !isLandscape)
+              Flexible(
+                flex: 6,
+                child: TransactionList(
+                  transactions: Transactions.transactionsData,
+                  onRemove: _deleteTransaction,
+                ),
+              ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,

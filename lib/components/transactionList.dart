@@ -58,49 +58,63 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(DateFormat('dd MMMM y', 'pt-BR')
                         .format(transaction.date)),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Colors.red[300],
-                      onPressed: () => this.onRemove(transaction.id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 400
+                        ? FlatButton.icon(
+                            onPressed: () => this.onRemove(transaction.id),
+                            icon: Icon(Icons.delete),
+                            label: Text('Excluir'),
+                            textColor: Colors.red[300],
+                          )
+                        : IconButton(
+                            onPressed: () => this.onRemove(transaction.id),
+                            icon: Icon(Icons.delete),
+                            color: Colors.red[300],
+                          ),
                   ),
                 );
               },
             ),
           )
-        : Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        : LayoutBuilder(
+            builder: (ctx, constraints) {
+              return Padding(
+                padding: EdgeInsets.all(constraints.maxWidth * 0.05),
+                child: Column(
                   children: <Widget>[
-                    Text(
-                      'No expenses yet',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Quicksand',
-                        fontStyle: FontStyle.italic,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'No expenses yet',
+                          style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).textScaleFactor * 20,
+                            fontFamily: 'Quicksand',
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: constraints.maxWidth * 0.05),
+                          child: Icon(
+                            Icons.sentiment_dissatisfied,
+                          ),
+                        )
+                      ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Icon(
-                        Icons.sentiment_dissatisfied,
+                      padding:
+                          EdgeInsets.only(top: constraints.maxHeight * 0.05),
+                      child: Container(
+                        height: constraints.maxHeight * 0.5,
+                        child: Image.asset('assets/images/waiting.png',
+                            fit: BoxFit.cover),
                       ),
-                    )
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 17.5),
-                  child: Container(
-                    height: 200,
-                    child: Image.asset('assets/images/waiting.png',
-                        fit: BoxFit.cover),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           );
   }
 }
